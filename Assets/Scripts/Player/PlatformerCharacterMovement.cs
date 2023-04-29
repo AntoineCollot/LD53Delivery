@@ -25,7 +25,6 @@ public class PlatformerCharacterMovement : PlayerController
     float maxSpeedChange;
     Vector2 velocity;
 
-
     public enum MovementState { Idle, Acceleration, MaxSpeed, Deceleration, Turning }
     public MovementState movementState { get; private set; }
 

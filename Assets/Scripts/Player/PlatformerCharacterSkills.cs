@@ -1,14 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
 public class PlatformerCharacterSkills : PlayerController
 {
+    public LayerMask enemiesLayer;
+
     [Header("Dash")]
     public float dashSpeed = 20;
     public float dashDuration = 0.3f;
     CompositeStateToken isDashingToken;
+
+    [Header("Slide")]
+    [Range(0, 90)] public float slideShootAngle = 20;
+    public float slideShootRange = 3;
+    public Transform slideShootHolder;
+    public ParticleSystem slideExplosionFX;
 
     [Header("UpwardKick")]
     public float upwardKickSpeed = 30;
@@ -25,6 +34,10 @@ public class PlatformerCharacterSkills : PlayerController
     GroundCaster ground;
     PlatformerCharacterMovement movement;
 
+    //Events
+    public UnityEvent onSlide = new UnityEvent();
+    public UnityEvent onUpKick = new UnityEvent();
+    public bool IsDashing => isDashingToken.IsOn;
 
     // Start is called before the first frame update
     protected override void Awake()
@@ -61,7 +74,7 @@ public class PlatformerCharacterSkills : PlayerController
 
     private void FixedUpdate()
     {
-        if (isDashingToken.IsOn)
+        if (IsDashing)
         {
             body.velocity = translateVelocity;
         }
@@ -72,7 +85,6 @@ public class PlatformerCharacterSkills : PlayerController
         CancelInvoke();
 
         Vector2 input = inputs.Gameplay.SkillDirection.ReadValue<Vector2>();
-        print(input.ToDirection());
         switch (input.ToDirection())
         {
             case Direction.Up:
@@ -108,9 +120,50 @@ public class PlatformerCharacterSkills : PlayerController
         }
 
         translateVelocity *= dashSpeed;
-
         isDashingToken.SetOn(true);
-        Invoke("EndDashing", dashDuration);
+
+        onSlide.Invoke();
+        StartCoroutine(SlideAnim());
+    }
+
+    IEnumerator SlideAnim()
+    {
+        float t = 0;
+        RaycastHit2D[] hits = new RaycastHit2D[5];
+        ContactFilter2D contactFilter = new ContactFilter2D();
+        contactFilter.layerMask = enemiesLayer;
+        Vector2 shootDir = new Vector2(Mathf.Cos(slideShootAngle * Mathf.Deg2Rad), Mathf.Sin(slideShootAngle * Mathf.Deg2Rad));
+        if (movement.facingDirection == HorizontalDirection.Backward)
+        {
+            shootDir.x *= -1;
+        }
+
+        slideShootHolder.gameObject.SetActive(true);
+        slideExplosionFX.Play();
+
+        while (t<1)
+        {
+            t += Time.deltaTime / dashDuration;
+
+            int hitCount = Physics2D.Raycast(slideShootHolder.position, shootDir, contactFilter, hits,slideShootRange);
+
+            for (int i = 0; i < hitCount; i++)
+            {
+                if(hits[i].transform.TryGetComponent(out Enemy enemy))
+                {
+                    enemy.Kill(movement.facingDirection);
+                }
+            }
+
+            yield return null;
+        }
+
+        slideExplosionFX.Stop();
+        slideShootHolder.gameObject.SetActive(false);
+        isDashingToken.SetOn(false);
+
+        //Clamp speed to max speed
+        body.velocity = translateVelocity.normalized * movement.maxSpeed;
     }
 
     void EndDashing()
@@ -141,6 +194,8 @@ public class PlatformerCharacterSkills : PlayerController
 
         isDashingToken.SetOn(true);
         Invoke("EndDashing", upwardKickDuration);
+
+        onUpKick.Invoke();
     }
 
     public void UpwardKick2(HorizontalDirection direction)
@@ -162,6 +217,7 @@ public class PlatformerCharacterSkills : PlayerController
         upwardKickVelocity *= upwardKickSpeed;
 
         body.velocity = upwardKickVelocity;
+        onUpKick.Invoke();
     }
 
     public void DownWardKick()
@@ -194,6 +250,9 @@ public class PlatformerCharacterSkills : PlayerController
         Gizmos.color = Color.blue;
         length = dashDuration * dashSpeed;
         Gizmos.DrawRay(transform.position, Vector3.right * length);
+
+        Gizmos.color = Color.red;
+        Gizmos.DrawRay(slideShootHolder.position, new Vector2(Mathf.Cos(slideShootAngle * Mathf.Deg2Rad), Mathf.Sin(slideShootAngle * Mathf.Deg2Rad)) * slideShootRange);
     }
 #endif
 }

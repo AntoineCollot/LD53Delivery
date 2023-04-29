@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
 public class PlatformerCharacterJump : PlayerController
@@ -40,6 +41,8 @@ public class PlatformerCharacterJump : PlayerController
     public float TerminalFallVelocity => terminalFallVelocity;
     public float VerticalVelocity => velocity.y;
     public bool IsGrounded => ground.isGrounded;
+
+    public UnityEvent onJump = new UnityEvent();
 
     // Start is called before the first frame update
     void Start()
@@ -221,6 +224,8 @@ public class PlatformerCharacterJump : PlayerController
         snapFullJump = false;
 
         velocity.y += jumpSpeed;
+
+        onJump.Invoke();
 
         //Audio
         SFXManager.PlaySound(GlobalSFX.Jump);

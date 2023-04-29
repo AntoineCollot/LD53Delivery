@@ -13,8 +13,8 @@ TagManager:
   - UI
   - Level
   - Player
-  - 
-  - 
+  - IATriggers
+  - Enemies
   - 
   - 
   - 
@@ -38,6 +38,18 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: LevelBackground
+    uniqueID: 1522084493
+    locked: 0
+  - name: LevelForeground
+    uniqueID: 2376901545
+    locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Characters
+    uniqueID: 908182505
+    locked: 0
+  - name: FX
+    uniqueID: 3809748359
     locked: 0

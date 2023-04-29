@@ -31,4 +31,12 @@ public static class DirectionExtensions
         }
         return dir;
     }
+
+    public static Vector2 ToVector2(this HorizontalDirection dir)
+    {
+        if (dir == HorizontalDirection.Forward)
+            return Vector2.right;
+        else
+            return Vector2.left;
+    }
 }
