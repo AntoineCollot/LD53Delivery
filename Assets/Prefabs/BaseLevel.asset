@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd3e0046cee799d44b639113e2152917, type: 3}
   m_Name: BaseLevel
   m_EditorClassIdentifier: 
+  backgroundElementsColor: {r: 0.09267327, g: 0.14982179, b: 0.156, a: 1}
   blackCatRollIntervalMult: 1
   blackCatRollDurationMult: 1
   blackCatRollSpeedMult: 1

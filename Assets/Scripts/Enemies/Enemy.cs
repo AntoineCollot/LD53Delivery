@@ -11,8 +11,8 @@ public class Enemy : MonoBehaviour
     public GameObject deathFXPrefab;
     public bool isDead { get; protected set; }
     float lastHitTime;
-    const float KILL_FORCE = 7;
-    const float TIME_BEFORE_EXPLODE = 0.3f;
+    const float KILL_FORCE = 5;
+    const float TIME_BEFORE_EXPLODE = 0.5f;
     
 
     SpriteRenderer[] renderers;
@@ -50,7 +50,7 @@ public class Enemy : MonoBehaviour
             anim.transform.localScale = new Vector3(-1, 1, 1);
     }
 
-    public void Kill(HorizontalDirection dir)
+    public virtual void Kill(HorizontalDirection dir)
     {
         SetFacingDirection(dir);
         anim.SetBool("IsDead", true);

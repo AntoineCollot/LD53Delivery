@@ -26,11 +26,13 @@ public class CharacterAnimations : MonoBehaviour
         jump.onJump.AddListener(OnJump);
         skills.onSlide.AddListener(OnSlide);
         skills.onUpKick.AddListener(OnUpKick);
+        skills.onDive.AddListener(OnDive);
 
         movement.onFacingChanged.AddListener(OnFacingChanged);
 
         OnGroundStateChanged(ground.isGrounded);
     }
+
 
     void Update()
     {
@@ -60,6 +62,11 @@ public class CharacterAnimations : MonoBehaviour
     {
         anim.SetBool("IsSliding", true);
         StartCoroutine(WatchSliding());
+    }
+
+    private void OnDive()
+    {
+        anim.SetTrigger("Dive");
     }
 
     private void OnUpKick()

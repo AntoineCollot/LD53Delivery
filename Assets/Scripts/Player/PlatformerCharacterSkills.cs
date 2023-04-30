@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
@@ -24,8 +25,11 @@ public class PlatformerCharacterSkills : PlayerController
     [Range(0, 90)] public float upwardKickAngle = 45;
     public float upwardKickDuration = 0.3f;
 
-    [Header("DownwardKick")]
-    public float downwardKickSpeed = 30;
+    [Header("Dive")]
+    public float diveSpeed = 30;
+    CompositeStateToken isDivingToken;
+    public GameObject landingFXPrefab;
+    public float landingDamageRange;
 
     Vector2 translateVelocity;
 
@@ -37,6 +41,7 @@ public class PlatformerCharacterSkills : PlayerController
     //Events
     public UnityEvent onSlide = new UnityEvent();
     public UnityEvent onUpKick = new UnityEvent();
+    public UnityEvent onDive = new UnityEvent();
     public bool IsDashing => isDashingToken.IsOn;
 
     // Start is called before the first frame update
@@ -52,7 +57,9 @@ public class PlatformerCharacterSkills : PlayerController
     void Start()
     {
         isDashingToken = new CompositeStateToken();
+        isDivingToken = new CompositeStateToken();
         PlayerState.Instance.freezeInputsState.Add(isDashingToken);
+        PlayerState.Instance.freezeInputsState.Add(isDivingToken);
 
         movement = GetComponent<PlatformerCharacterMovement>();
     }
@@ -97,7 +104,7 @@ public class PlatformerCharacterSkills : PlayerController
                 Dash(HorizontalDirection.Backward);
                 break;
             case Direction.Down:
-                DownWardKick();
+                Dive();
                 break;
             default:
                 break;
@@ -220,22 +227,35 @@ public class PlatformerCharacterSkills : PlayerController
         onUpKick.Invoke();
     }
 
-    public void DownWardKick()
+    public void Dive()
     {
-        StartCoroutine(DownwardKickC());
+        StartCoroutine(DiveAnim());
+        onDive.Invoke();
     }
 
-    IEnumerator DownwardKickC()
+    IEnumerator DiveAnim()
     {
-        isDashingToken.SetOn(true);
-        translateVelocity = Vector2.down * downwardKickSpeed;
+        isDivingToken.SetOn(true);
+        translateVelocity = Vector2.down * diveSpeed;
 
         while (!ground.isGrounded)
         {
             yield return null;
         }
 
-        isDashingToken.SetOn(false);
+        GameObject landingFX = Instantiate(landingFXPrefab, transform.position, Quaternion.identity, null);
+        Destroy(landingFX, 2);
+
+        Collider2D[] cols = Physics2D.OverlapCircleAll(transform.position, landingDamageRange,enemiesLayer);
+        foreach (Collider2D col in cols)
+        {
+            if(col.TryGetComponent(out Enemy enemy))
+            {
+                enemy.Kill(movement.facingDirection);
+            }
+        }
+
+        isDivingToken.SetOn(false);
     }
 
 #if UNITY_EDITOR
@@ -253,6 +273,9 @@ public class PlatformerCharacterSkills : PlayerController
 
         Gizmos.color = Color.red;
         Gizmos.DrawRay(slideShootHolder.position, new Vector2(Mathf.Cos(slideShootAngle * Mathf.Deg2Rad), Mathf.Sin(slideShootAngle * Mathf.Deg2Rad)) * slideShootRange);
+
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, landingDamageRange);
     }
 #endif
 }

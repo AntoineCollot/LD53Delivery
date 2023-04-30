@@ -17,6 +17,14 @@ public class EagleEnemy : Enemy
         StartCoroutine(FireLoop());
     }
 
+    private void FixedUpdate()
+    {
+        if (!isDead)
+        {
+            body.velocity = Vector3.zero;
+        }
+    }
+
     IEnumerator FireLoop()
     {
         yield return new WaitForSeconds(Random.Range(0f, 2.0f));
@@ -38,5 +46,12 @@ public class EagleEnemy : Enemy
 
         Rigidbody2D projectile = Instantiate(projectilePrefab, fireOrigin.position, Quaternion.identity, null);
         projectile.velocity = dir * ProjectileSpeed;
+    }
+
+    public override void Kill(HorizontalDirection dir)
+    {
+        base.Kill(dir);
+
+        body.gravityScale = 1;
     }
 }
