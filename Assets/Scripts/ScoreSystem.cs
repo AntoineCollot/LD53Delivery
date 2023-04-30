@@ -21,10 +21,18 @@ public class ScoreSystem : MonoBehaviour
             else if (BloodLevel < 0.5f)
                 return "Pretty good ngl";
             else if (BloodLevel < 0.75f)
-                return "Wow";
+                return "Savage";
             else if (BloodLevel < 0.9f)
                 return "Serious Damages";
             else return "AHAHAHAH";
+        }
+    }
+
+    public float Score
+    {
+        get
+        {
+           return Mathf.Lerp(1000, 100, levelTime / 120) * (1+BloodLevel);
         }
     }
 

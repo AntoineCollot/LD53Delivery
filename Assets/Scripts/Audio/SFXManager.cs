@@ -7,16 +7,21 @@ using UnityEditor;
 
 public enum GlobalSFX
 {
-    VillagerKilled,
     Jump,
     Land,
-    Attack,
-    Star,
-    ButtonHover,
+    EnemyDeath,
+    CatKill,
+    EagleKill,
+    CatAttack,
+    EagleAttack,
+    Hit,
+    Slide,
+    Kick,
+    Dive,
+    DiveLanding,
+    PlayerDeath,
     ButtonClick,
-    VillagerDeathOldAge,
-    VillagerMaxPoints,
-    GhostApparition,
+    ProjectileExplosion,
 }
 public class SFXManager : MonoBehaviour
 {

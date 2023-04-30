@@ -18,9 +18,10 @@ public class CatEnemy : Enemy
     public bool isRolling { get; private set; }
     public float RollSpeed => baseRollSpeed * LevelManager.Instance.levelConstants.blackCatRollSpeedMult;
 
-
-    private void Start()
+    protected override void OnGameStart()
     {
+        base.OnGameStart();
+
         StartCoroutine(Roll());
     }
 
@@ -72,6 +73,8 @@ public class CatEnemy : Enemy
 
             anim.SetBool("IsRolling", true);
             isRolling = true;
+            audioSource.Play();
+            //SFXManager.PlaySound(GlobalSFX.CatAttack);
 
             yield return new WaitForSeconds(baseRollDuration * LevelManager.Instance.levelConstants.blackCatRollDurationMult);
 
@@ -90,7 +93,14 @@ public class CatEnemy : Enemy
         SetFacingDirection(currentDirection);
     }
 
-   
+    public override void Kill(HorizontalDirection dir, float bonusEjectForce = 0)
+    {
+        if (!isDead)
+            SFXManager.PlaySound(GlobalSFX.CatKill);
+        base.Kill(dir, bonusEjectForce);
+
+    }
+
 
 #if UNITY_EDITOR
     private void OnDrawGizmosSelected()

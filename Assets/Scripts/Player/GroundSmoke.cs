@@ -9,11 +9,17 @@ public class GroundSmoke : MonoBehaviour
     public ParticleSystem walkParticles;
     public ParticleSystem landParticles;
     ParticleSystem.EmissionModule walkEmission;
+    AudioSource audioSource;
+    float baseVolume;
+    PlatformerCharacterMovement movement;
 
     // Start is called before the first frame update
     void Awake()
     {
         walkEmission = walkParticles.emission;
+        audioSource = GetComponent<AudioSource>();
+        movement = GetComponentInParent<PlatformerCharacterMovement>();
+        baseVolume = audioSource.volume;
     }
 
     private void OnEnable()
@@ -31,9 +37,15 @@ public class GroundSmoke : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        audioSource.volume = Mathf.Lerp(0, baseVolume, Mathf.Abs(movement.NormalizedHorizontalSpeed)); 
+    }
+
     private void OnGroundedStateChanged(bool isGrounded)
     {
         walkEmission.enabled = isGrounded;
+        audioSource.mute = !isGrounded;
 
         if (isGrounded)
         {

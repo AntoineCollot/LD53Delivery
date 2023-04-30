@@ -7,6 +7,7 @@ public class Enemy : MonoBehaviour
     protected Animator anim;
     protected Rigidbody2D body;
     protected HorizontalDirection facingDirection = HorizontalDirection.Backward;
+    protected AudioSource audioSource;
 
     [Header("Kill")]
     public GameObject deathFXPrefab;
@@ -24,6 +25,20 @@ public class Enemy : MonoBehaviour
 
         anim = GetComponentInChildren<Animator>();
         body = GetComponent<Rigidbody2D>();
+        audioSource =GetComponent<AudioSource>();
+    }
+
+    protected virtual void Start()
+    {
+        if (GameManager.Instance.gameHasStarted)
+            OnGameStart();
+        else
+            GameManager.Instance.onGameStart.AddListener(OnGameStart);
+    }
+
+    protected virtual void OnGameStart()
+    {
+        GameManager.Instance.onGameStart.RemoveListener(OnGameStart);
     }
 
     protected virtual void Update()
@@ -56,6 +71,8 @@ public class Enemy : MonoBehaviour
     {
         SetFacingDirection(dir);
         anim.SetBool("IsDead", true);
+        if(!isDead)
+            SFXManager.PlaySound(GlobalSFX.Hit);
         isDead = true;
 
         foreach (SpriteRenderer renderer in renderers)
@@ -73,6 +90,7 @@ public class Enemy : MonoBehaviour
     {
         GameObject deathFX = Instantiate(deathFXPrefab, transform.position+Vector3.up * 0.3f, Quaternion.identity, null);
         Destroy(deathFX, 2);
+        SFXManager.PlaySound(GlobalSFX.EnemyDeath);
 
         Destroy(gameObject);
     }

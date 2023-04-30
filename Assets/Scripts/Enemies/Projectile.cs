@@ -24,7 +24,9 @@ public class Projectile : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.transform == PlayerState.Instance.transform)
+        if (collision.attachedRigidbody == null)
+            return;
+        if (collision.attachedRigidbody.transform == PlayerState.Instance.transform)
         {
             PlayerDeath.Instance.Kill();
         }
@@ -36,6 +38,7 @@ public class Projectile : MonoBehaviour
     {
         GameObject explodeFX = Instantiate(explodeFXPrefab, transform.position, Quaternion.identity, null);
         Destroy(explodeFX, 2);
+        SFXManager.PlaySound(GlobalSFX.ProjectileExplosion);
 
         Destroy(gameObject);
     }

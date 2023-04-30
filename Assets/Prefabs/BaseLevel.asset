@@ -13,8 +13,10 @@ MonoBehaviour:
   m_Name: BaseLevel
   m_EditorClassIdentifier: 
   backgroundElementsColor: {r: 0.09267327, g: 0.14982179, b: 0.156, a: 1}
+  levelId: 1
   blackCatRollIntervalMult: 1
   blackCatRollDurationMult: 1
   blackCatRollSpeedMult: 1
   eagleFireIntervalMult: 1
   eagleProjectileSpeedMult: 1
+  enemyCount: 3

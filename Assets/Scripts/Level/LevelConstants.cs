@@ -7,6 +7,7 @@ public class LevelConstants : ScriptableObject
 {
     [Header("Level")]
     public Color backgroundElementsColor;
+    public int levelId;
 
     [Header("Black Cats")]
     [Range(0,1)] public float blackCatRollIntervalMult = 1;

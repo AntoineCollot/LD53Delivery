@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
 
     public UnityEvent onGameStart = new UnityEvent();
     public UnityEvent onGameOver = new UnityEvent();
+    public UnityEvent onGameWin = new UnityEvent();
 
     public static GameManager Instance;
 
@@ -32,5 +33,11 @@ public class GameManager : MonoBehaviour
     {
         gameIsOver = true;
         onGameOver.Invoke();
+    }
+
+    public void ClearLevel()
+    {
+        gameIsOver = true;
+        onGameWin.Invoke();
     }
 }

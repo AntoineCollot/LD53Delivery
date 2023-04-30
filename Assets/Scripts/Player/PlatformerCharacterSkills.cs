@@ -104,6 +104,9 @@ public class PlatformerCharacterSkills : PlayerController
 
     private void FixedUpdate()
     {
+        if (!GameManager.Instance.GameIsPlaying)
+            return;
+
         if (IsSliding || IsDiving || IsKicking)
         {
             body.velocity = translateVelocity;
@@ -112,6 +115,9 @@ public class PlatformerCharacterSkills : PlayerController
 
     private void Update()
     {
+        if (!GameManager.Instance.GameIsPlaying)
+            return;
+
         if (!canDive && Time.time > lastJumpTime + minDiveTimeAfterJump && !ground.isGrounded)
         {
             canDive = true;
@@ -127,6 +133,9 @@ public class PlatformerCharacterSkills : PlayerController
 
     private void OnSkill(InputAction.CallbackContext ctx)
     {
+        if (!GameManager.Instance.GameIsPlaying)
+            return;
+
         if (IsDiving || IsKicking)
         {
             return;
@@ -215,6 +224,7 @@ public class PlatformerCharacterSkills : PlayerController
 
         slideShootHolder.gameObject.SetActive(true);
         slideExplosionFX.Play();
+        SFXManager.PlaySound(GlobalSFX.Slide);
 
         while (t < 1)
         {
@@ -294,6 +304,9 @@ public class PlatformerCharacterSkills : PlayerController
             hitboxDir.x *= -1;
         }
 
+        SFXManager.PlaySound(GlobalSFX.Kick);
+        Physics2D.IgnoreLayerCollision(ENEMY_LAYER, gameObject.layer, true);
+
         while (t < 1)
         {
             if(airborn)
@@ -310,12 +323,18 @@ public class PlatformerCharacterSkills : PlayerController
                     enemy.Kill(movement.facingDirection, 5);
                     OnEnemyKill();
                 }
+
+                else if(col.transform.TryGetComponent(out Projectile projectile))
+                {
+                    projectile.Explode();
+                }
             }
 
             yield return null;
         }
 
         isKickingToken.SetOn(false);
+        Physics2D.IgnoreLayerCollision(ENEMY_LAYER, gameObject.layer, false);
 
         //Clamp speed to max speed plus a bit
         body.velocity = translateVelocity.normalized * movement.maxSpeed * 1.2f;
@@ -341,11 +360,14 @@ public class PlatformerCharacterSkills : PlayerController
         Physics2D.IgnoreLayerCollision(ENEMY_LAYER, gameObject.layer, true);
         translateVelocity = Vector2.down * diveSpeed;
 
+        SFXManager.PlaySound(GlobalSFX.Dive);
+
         while (!ground.isGrounded)
         {
             yield return null;
         }
 
+        SFXManager.PlaySound(GlobalSFX.DiveLanding);
         GameObject landingFX = Instantiate(landingFXPrefab, transform.position, Quaternion.identity, null);
         Destroy(landingFX, 2);
 

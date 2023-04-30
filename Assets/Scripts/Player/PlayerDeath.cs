@@ -39,6 +39,7 @@ public class PlayerDeath : MonoBehaviour
         virtualCam.Follow = null;
         virtualCam.LookAt = null;
         deathFX.SetActive(true);
+        SFXManager.PlaySound(GlobalSFX.PlayerDeath);
         GameManager.Instance.GameOver();
 
     }

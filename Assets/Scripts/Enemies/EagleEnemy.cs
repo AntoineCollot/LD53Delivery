@@ -13,8 +13,10 @@ public class EagleEnemy : Enemy
 
     public float ProjectileSpeed => baseProjectileSpeed * LevelManager.Instance.levelConstants.eagleProjectileSpeedMult;
 
-    private void Start()
+    protected override void OnGameStart()
     {
+        base.OnGameStart();
+
         StartCoroutine(FireLoop());
     }
 
@@ -42,6 +44,11 @@ public class EagleEnemy : Enemy
         if (Mathf.Abs(angleToPlayer) >= maxAngle)
             yield break;
 
+        if (Vector2.Distance(PlayerState.Instance.transform.position, transform.position) > 10)
+            yield break;
+
+        //SFXManager.PlaySound(GlobalSFX.EagleAttack);
+        audioSource.Play();
         anim.SetTrigger("Fire");
 
         yield return new WaitForSeconds(0.35f);
@@ -55,6 +62,9 @@ public class EagleEnemy : Enemy
 
     public override void Kill(HorizontalDirection dir, float bonusEjectForce = 0)
     {
+        if (!isDead)
+            SFXManager.PlaySound(GlobalSFX.EagleKill);
+
         base.Kill(dir, bonusEjectForce);
 
         body.gravityScale = 1;
