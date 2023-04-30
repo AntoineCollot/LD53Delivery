@@ -275,6 +275,7 @@ MonoBehaviour:
   projectilePrefab: {fileID: 1179519837363747618, guid: 6d3bebb94f3817046b4f9f38148a8a7c,
     type: 3}
   fireOrigin: {fileID: 5509831053850706191}
+  maxAngle: 60
 --- !u!50 &5509831054576169777
 Rigidbody2D:
   serializedVersion: 4

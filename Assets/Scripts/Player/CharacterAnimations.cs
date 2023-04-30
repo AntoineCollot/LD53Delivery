@@ -76,7 +76,7 @@ public class CharacterAnimations : MonoBehaviour
 
     IEnumerator WatchSliding()
     {
-        while (skills.IsDashing)
+        while (skills.IsSliding)
             yield return true;
 
         anim.SetBool("IsSliding", false);

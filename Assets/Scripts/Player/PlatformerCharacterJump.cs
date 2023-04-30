@@ -14,6 +14,7 @@ public class PlatformerCharacterJump : PlayerController
     [SerializeField, Range(0.2f, 2)] float timeToJumpApex = 0.5f;
     [SerializeField, Range(5, 20)] float terminalFallVelocity = 20;
     [SerializeField, Range(0, 0.3f)] float snapToFullJumpTime = 0.15f;
+    public int airbornJumpCount { get; private set; }
 
     bool desireJump;
     bool isPressingJump;
@@ -176,6 +177,11 @@ public class PlatformerCharacterJump : PlayerController
         }
     }
 
+    public void AddAirbornJump()
+    {
+        airbornJumpCount++;
+    }
+
     void TryJump()
     {
         if (forceFullJump)
@@ -184,6 +190,11 @@ public class PlatformerCharacterJump : PlayerController
         if (ground.isGrounded || (coyoteTimeCounter01 > 0 && coyoteTimeCounter01 < 1))
         {
             Jump(0);
+        }
+        else if(!ground.isGrounded && airbornJumpCount > 0)
+        {
+            airbornJumpCount--;
+            ForceJump(0);
         }
     }
 
@@ -239,6 +250,7 @@ public class PlatformerCharacterJump : PlayerController
             isJumping = false;
             forceFullJump = false;
             snapFullJump = false;
+            airbornJumpCount = 0;
         }
     }
 }

@@ -15,7 +15,7 @@ public static class DirectionExtensions
     public static Direction ToDirection(this Vector2 vector)
     {
         Direction dir;
-        if (Mathf.Abs(vector.x) >= Mathf.Abs(vector.y))
+        if (Mathf.Abs(vector.x) > Mathf.Abs(vector.y)+0.05f)
         {
             if (vector.x < 0)
                 dir = Direction.Left;
@@ -24,7 +24,8 @@ public static class DirectionExtensions
         }
         else
         {
-            if (vector.y < 0)
+            //Make down the default
+            if (vector.y <= 0.05f)
                 dir = Direction.Down;
             else
                 dir = Direction.Up;

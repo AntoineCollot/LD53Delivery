@@ -17,4 +17,7 @@ public class LevelConstants : ScriptableObject
     [Range(0, 1)] public float eagleFireIntervalMult = 1;
     [Range(1, 10)] public float eagleProjectileSpeedMult = 1;
 
+    [Header("Score")]
+    public int enemyCount;
+
 }

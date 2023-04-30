@@ -26,7 +26,7 @@ public class Projectile : MonoBehaviour
     {
         if(collision.transform == PlayerState.Instance.transform)
         {
-            print("Kill Player");
+            PlayerDeath.Instance.Kill();
         }
 
         Explode();

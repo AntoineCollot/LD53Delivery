@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 28fd272b8485ad44fa572093f4c30cf9
+guid: 9f306f9b66e1fd9489150b124742108c
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -116,64 +116,106 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: PigeonJump_0
+      name: FXStar_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 48
-        height: 48
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1d554eb12273a424a998d82f6523dd6f
-      internalID: 512924611
+      spriteID: ad44bf744ede8c343b9fe3311562ab7e
+      internalID: -223041352
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PigeonJump_1
+      name: FXStar_1
       rect:
         serializedVersion: 2
-        x: 48
+        x: 32
         y: 0
-        width: 48
-        height: 48
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 99795f27f008ee945ad2012d93811997
-      internalID: -56073598
+      spriteID: cb44e9abb9eae2d44b267f6e7ef7a6c5
+      internalID: -928354828
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PigeonJump_2
+      name: FXStar_2
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d5ed99577bc8c114995b3854dde339b1
+      internalID: 590713022
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FXStar_3
       rect:
         serializedVersion: 2
         x: 96
         y: 0
-        width: 48
-        height: 48
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6347246a09b964240ae8da3c7c2f9d8e
-      internalID: 1337709753
+      spriteID: e8c73d55047cbf6408f48dedf88a21ff
+      internalID: -370259479
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FXStar_4
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2c904cfcf9cae7b408664c8c3b246257
+      internalID: -314060610
       vertices: []
       indices: 
       edges: []
@@ -181,7 +223,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 72f5d8504a0361644bb426046bd002b1
+    spriteID: 08056369eac74254b867e2ba71c6f606
     internalID: 0
     vertices: []
     indices: 
@@ -189,10 +231,11 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      PigeonJump_2: 1337709753
-      PigeonJump_0: 512924611
-      PigeonJump_3: 625933206
-      PigeonJump_1: -56073598
+      FXStar_3: -370259479
+      FXStar_1: -928354828
+      FXStar_2: 590713022
+      FXStar_4: -314060610
+      FXStar_0: -223041352
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

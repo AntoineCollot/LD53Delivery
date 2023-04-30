@@ -6,6 +6,7 @@ public class Enemy : MonoBehaviour
 {
     protected Animator anim;
     protected Rigidbody2D body;
+    protected HorizontalDirection facingDirection = HorizontalDirection.Backward;
 
     [Header("Kill")]
     public GameObject deathFXPrefab;
@@ -38,19 +39,20 @@ public class Enemy : MonoBehaviour
     {
         if(collision.transform == PlayerState.Instance.transform)
         {
-            print("PlayerKill");
+            PlayerDeath.Instance.Kill();
         }
     }
 
     public void SetFacingDirection(HorizontalDirection dir)
     {
+        facingDirection = dir;
         if (dir == HorizontalDirection.Backward)
             anim.transform.localScale = Vector3.one;
         else
             anim.transform.localScale = new Vector3(-1, 1, 1);
     }
 
-    public virtual void Kill(HorizontalDirection dir)
+    public virtual void Kill(HorizontalDirection dir, float bonusEjectForce = 0)
     {
         SetFacingDirection(dir);
         anim.SetBool("IsDead", true);
@@ -61,7 +63,7 @@ public class Enemy : MonoBehaviour
             renderer.material.SetFloat("_HitTime", Time.time);
         }
 
-        body.velocity = (dir.ToVector2() + Vector2.up) * KILL_FORCE;
+        body.velocity = (dir.ToVector2() + Vector2.up) * (KILL_FORCE+ bonusEjectForce);
         lastHitTime = Time.time;
 
         GetComponent<Collider2D>().isTrigger = true;
