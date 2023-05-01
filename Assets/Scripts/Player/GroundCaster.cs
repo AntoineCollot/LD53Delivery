@@ -35,7 +35,7 @@ public class GroundCaster : MonoBehaviour
     public void CastGround()
     {
         //Don't cast multiple times per fixed frame
-        if (lastUpdateTime >= Time.fixedTime)
+        if (lastUpdateTime >= Time.fixedTime || !GameManager.Instance.gameHasStarted)
             return;
 
         lastUpdateTime = Time.fixedTime;

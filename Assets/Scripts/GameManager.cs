@@ -19,24 +19,31 @@ public class GameManager : MonoBehaviour
     void Awake()
     {
         Instance = this;
-        if(autoStart)
+        if (autoStart)
             StartGame();
     }
 
     public void StartGame()
     {
+        if (gameHasStarted)
+            return;
         gameHasStarted = true;
         onGameStart.Invoke();
     }
 
     public void GameOver()
     {
+        if (gameIsOver)
+            return;
         gameIsOver = true;
         onGameOver.Invoke();
     }
 
     public void ClearLevel()
     {
+        if (gameIsOver)
+            return;
+
         gameIsOver = true;
         onGameWin.Invoke();
     }

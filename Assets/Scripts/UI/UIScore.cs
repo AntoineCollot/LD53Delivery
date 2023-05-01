@@ -49,7 +49,7 @@ public class UIScore : MonoBehaviour
             t += Time.deltaTime / TIME_SCROLL_DURATION;
 
             TimeSpan span = TimeSpan.FromSeconds(finalTime * (double)t);
-            timeText.text = span.ToString(@"mm\:ss\:ff") + " +";
+            timeText.text = "Time : "+span.ToString(@"mm\:ss\:ff") + " +";
 
             yield return null;
         }

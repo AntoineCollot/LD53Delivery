@@ -8,7 +8,7 @@ public class ScoreSystem : MonoBehaviour
     public float levelTime { get; private set; }
     public int killCount { get; private set; }
 
-    public float BloodLevel => killCount / LevelManager.Instance.levelConstants.enemyCount;
+    public float BloodLevel => Mathf.Clamp01((float)killCount / LevelManager.Instance.levelConstants.enemyCount);
 
     public string Bloodiness
     {

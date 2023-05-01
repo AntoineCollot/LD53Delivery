@@ -22,6 +22,7 @@ public enum GlobalSFX
     PlayerDeath,
     ButtonClick,
     ProjectileExplosion,
+    LevelCleared,
 }
 public class SFXManager : MonoBehaviour
 {

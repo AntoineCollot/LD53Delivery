@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3983225191413540090}
   - component: {fileID: 8484383330234272442}
-  m_Layer: 11
+  m_Layer: 7
   m_Name: SecondaryColliderRight
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -41,7 +41,7 @@ CircleCollider2D:
   m_GameObject: {fileID: 653412324385965189}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 6200000, guid: c4d16d64cdfd6994bbbad1a4b16b5836, type: 2}
+  m_Material: {fileID: 6200000, guid: 02d935bda180c394697033675957ab4b, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -302,12 +302,12 @@ CapsuleCollider2D:
   m_GameObject: {fileID: 883527447982772794}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 6200000, guid: c4d16d64cdfd6994bbbad1a4b16b5836, type: 2}
+  m_Material: {fileID: 6200000, guid: 02d935bda180c394697033675957ab4b, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.5}
-  m_Size: {x: 0.6, y: 1}
+  m_Offset: {x: 0, y: 0.45}
+  m_Size: {x: 0.6, y: 0.9}
   m_Direction: 0
 --- !u!1 &883527448008435942
 GameObject:
@@ -413,9 +413,9 @@ MonoBehaviour:
   maxAcceleration: 50
   maxDeceleration: 50
   maxTurnSpeed: 50
-  maxAirAcceleration: 10
-  maxAirDeceleration: 10
-  maxAirTurnSpeed: 5
+  maxAirAcceleration: 20
+  maxAirDeceleration: 20
+  maxAirTurnSpeed: 20
 --- !u!114 &883527448008435967
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -450,7 +450,7 @@ MonoBehaviour:
   slideShootRange: 2.8
   slideShootHolder: {fileID: 1388517398277644807}
   slideExplosionFX: {fileID: 1388517400140631418}
-  slideCooldown: 1.2
+  slideCooldown: 1
   upwardKickSpeed: 17
   upwardKickAngle: 35
   upwardKickDuration: 0.4
@@ -458,7 +458,7 @@ MonoBehaviour:
   landingFXPrefab: {fileID: 1871483265376200177, guid: e5bc75fd238d5064eb723f635e3b655c,
     type: 3}
   landingDamageRange: 1
-  minDiveTimeAfterJump: 0.2
+  minDiveTimeAfterJump: 0.17
   onSlide:
     m_PersistentCalls:
       m_Calls: []
@@ -484,6 +484,7 @@ MonoBehaviour:
   colliders: {fileID: 883527447982772794}
   virtualCam: {fileID: 0}
   deathFX: {fileID: 8690001076637882109}
+  isInvincible: 0
 --- !u!1 &1388517398277644806
 GameObject:
   m_ObjectHideFlags: 0
@@ -10478,7 +10479,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4941583359050956769}
   - component: {fileID: 1792283895734862515}
-  m_Layer: 11
+  m_Layer: 7
   m_Name: SecondaryColliderLeft
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -10509,7 +10510,7 @@ CircleCollider2D:
   m_GameObject: {fileID: 5184869440998680505}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 6200000, guid: c4d16d64cdfd6994bbbad1a4b16b5836, type: 2}
+  m_Material: {fileID: 6200000, guid: 02d935bda180c394697033675957ab4b, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0

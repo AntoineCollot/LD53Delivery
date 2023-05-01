@@ -71,13 +71,40 @@ public partial class @InputMap : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""GameOver"",
+                    ""type"": ""Button"",
+                    ""id"": ""6121fe84-bfe1-4544-8ce8-8db2170531d2"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ValidateUI"",
+                    ""type"": ""Button"",
+                    ""id"": ""b3740cc0-6d58-4fd9-b4a3-756fd63c8d39"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Dive"",
+                    ""type"": ""Button"",
+                    ""id"": ""de85cfb2-6c76-4282-b532-897cfe9daaa6"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
                 {
                     ""name"": """",
-                    ""id"": ""bede74c9-3928-445b-9f15-78c78f864f00"",
-                    ""path"": ""<Keyboard>/space"",
+                    ""id"": ""3fdc7fe5-faf1-4164-816e-40a61966bc0d"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -87,8 +114,19 @@ public partial class @InputMap : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""3fdc7fe5-faf1-4164-816e-40a61966bc0d"",
-                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""id"": ""87cd0b26-9684-4ad3-b4b2-956eeed70363"",
+                    ""path"": ""<Keyboard>/upArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Jump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0df3d0e9-1f11-43cc-85a4-c6957e878c40"",
+                    ""path"": ""<Keyboard>/w"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -208,17 +246,6 @@ public partial class @InputMap : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""6399acae-6f09-49ad-8319-f75c916693d7"",
-                    ""path"": ""<Keyboard>/v"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Skill"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""e3bf294c-7143-4cd9-a459-bc25aab59416"",
                     ""path"": ""<Gamepad>/buttonEast"",
                     ""interactions"": """",
@@ -231,7 +258,18 @@ public partial class @InputMap : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""bbc6c356-b5e4-4287-bbe4-a7a11d554ef9"",
-                    ""path"": ""<Keyboard>/shift"",
+                    ""path"": ""<Keyboard>/ctrl"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Skill"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""aef9a69e-1e81-498e-bfb6-b1ccc471bdb4"",
+                    ""path"": ""<Keyboard>/space"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -260,17 +298,6 @@ public partial class @InputMap : IInputActionCollection2, IDisposable
                     ""action"": ""SkillDirection"",
                     ""isComposite"": true,
                     ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""up"",
-                    ""id"": ""655929cf-cd94-4cc9-8028-02e9be05b7a4"",
-                    ""path"": ""<Keyboard>/w"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""SkillDirection"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
                 },
                 {
                     ""name"": ""down"",
@@ -317,19 +344,8 @@ public partial class @InputMap : IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 },
                 {
-                    ""name"": ""up"",
-                    ""id"": ""1ba18944-e64b-451e-b227-c83b91e7016c"",
-                    ""path"": ""<Keyboard>/upArrow"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""SkillDirection"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
                     ""name"": ""down"",
-                    ""id"": ""93f57ccf-c28d-45fd-be53-8aa65102cb38"",
+                    ""id"": ""a2d871fb-b786-4816-a997-62df0011a197"",
                     ""path"": ""<Keyboard>/downArrow"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -359,6 +375,94 @@ public partial class @InputMap : IInputActionCollection2, IDisposable
                     ""action"": ""SkillDirection"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d7921e04-fe21-40ea-8fe2-ecccee3edc31"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""GameOver"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a2fb668b-1982-4c01-b86b-a4ab98e18e0f"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""GameOver"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""70c11c7f-227b-4046-b38c-58b7ba4084b3"",
+                    ""path"": ""<Keyboard>/enter"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ValidateUI"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9bfd2c35-0b8b-4e9a-8d79-a8efc5813a58"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ValidateUI"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e8830bc8-dcd0-44fe-95d0-3d89000208bd"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ValidateUI"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d7d577fc-a719-4d38-8cf7-ac08b974232f"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Dive"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f448e879-ceb9-4833-a1ab-93fb35750599"",
+                    ""path"": ""<Keyboard>/downArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Dive"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""96f49357-35e4-4431-9410-4bcb4dd208cc"",
+                    ""path"": ""<Gamepad>/buttonNorth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Dive"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -372,6 +476,9 @@ public partial class @InputMap : IInputActionCollection2, IDisposable
         m_Gameplay_MoveCamera = m_Gameplay.FindAction("MoveCamera", throwIfNotFound: true);
         m_Gameplay_Skill = m_Gameplay.FindAction("Skill", throwIfNotFound: true);
         m_Gameplay_SkillDirection = m_Gameplay.FindAction("SkillDirection", throwIfNotFound: true);
+        m_Gameplay_GameOver = m_Gameplay.FindAction("GameOver", throwIfNotFound: true);
+        m_Gameplay_ValidateUI = m_Gameplay.FindAction("ValidateUI", throwIfNotFound: true);
+        m_Gameplay_Dive = m_Gameplay.FindAction("Dive", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -436,6 +543,9 @@ public partial class @InputMap : IInputActionCollection2, IDisposable
     private readonly InputAction m_Gameplay_MoveCamera;
     private readonly InputAction m_Gameplay_Skill;
     private readonly InputAction m_Gameplay_SkillDirection;
+    private readonly InputAction m_Gameplay_GameOver;
+    private readonly InputAction m_Gameplay_ValidateUI;
+    private readonly InputAction m_Gameplay_Dive;
     public struct GameplayActions
     {
         private @InputMap m_Wrapper;
@@ -445,6 +555,9 @@ public partial class @InputMap : IInputActionCollection2, IDisposable
         public InputAction @MoveCamera => m_Wrapper.m_Gameplay_MoveCamera;
         public InputAction @Skill => m_Wrapper.m_Gameplay_Skill;
         public InputAction @SkillDirection => m_Wrapper.m_Gameplay_SkillDirection;
+        public InputAction @GameOver => m_Wrapper.m_Gameplay_GameOver;
+        public InputAction @ValidateUI => m_Wrapper.m_Gameplay_ValidateUI;
+        public InputAction @Dive => m_Wrapper.m_Gameplay_Dive;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -469,6 +582,15 @@ public partial class @InputMap : IInputActionCollection2, IDisposable
                 @SkillDirection.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnSkillDirection;
                 @SkillDirection.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnSkillDirection;
                 @SkillDirection.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnSkillDirection;
+                @GameOver.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnGameOver;
+                @GameOver.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnGameOver;
+                @GameOver.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnGameOver;
+                @ValidateUI.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnValidateUI;
+                @ValidateUI.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnValidateUI;
+                @ValidateUI.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnValidateUI;
+                @Dive.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDive;
+                @Dive.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDive;
+                @Dive.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDive;
             }
             m_Wrapper.m_GameplayActionsCallbackInterface = instance;
             if (instance != null)
@@ -488,6 +610,15 @@ public partial class @InputMap : IInputActionCollection2, IDisposable
                 @SkillDirection.started += instance.OnSkillDirection;
                 @SkillDirection.performed += instance.OnSkillDirection;
                 @SkillDirection.canceled += instance.OnSkillDirection;
+                @GameOver.started += instance.OnGameOver;
+                @GameOver.performed += instance.OnGameOver;
+                @GameOver.canceled += instance.OnGameOver;
+                @ValidateUI.started += instance.OnValidateUI;
+                @ValidateUI.performed += instance.OnValidateUI;
+                @ValidateUI.canceled += instance.OnValidateUI;
+                @Dive.started += instance.OnDive;
+                @Dive.performed += instance.OnDive;
+                @Dive.canceled += instance.OnDive;
             }
         }
     }
@@ -499,5 +630,8 @@ public partial class @InputMap : IInputActionCollection2, IDisposable
         void OnMoveCamera(InputAction.CallbackContext context);
         void OnSkill(InputAction.CallbackContext context);
         void OnSkillDirection(InputAction.CallbackContext context);
+        void OnGameOver(InputAction.CallbackContext context);
+        void OnValidateUI(InputAction.CallbackContext context);
+        void OnDive(InputAction.CallbackContext context);
     }
 }

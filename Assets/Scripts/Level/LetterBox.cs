@@ -8,6 +8,11 @@ public class LetterBox : MonoBehaviour
     {
         if (collision.attachedRigidbody == null) return;
         if (collision.attachedRigidbody.transform == PlayerState.Instance.transform)
+        {
             GameManager.Instance.ClearLevel();
+
+            GetComponentInChildren<ParticleSystem>().Emit(20);
+            SFXManager.PlaySound(GlobalSFX.LevelCleared);
+        }
     }
 }

@@ -11,6 +11,7 @@ public class PlayerDeath : MonoBehaviour
     public static PlayerDeath Instance;
     CompositeStateToken gameIsPlayingToken;
     public GameObject deathFX;
+    public bool isInvincible;
 
     private void Awake()
     {
@@ -30,7 +31,7 @@ public class PlayerDeath : MonoBehaviour
 
     public void Kill()
     {
-        if (!GameManager.Instance.GameIsPlaying)
+        if (!GameManager.Instance.GameIsPlaying || isInvincible)
             return;
 
         GetComponent<Rigidbody2D>().velocity = new Vector2(-1, 1) * 7;

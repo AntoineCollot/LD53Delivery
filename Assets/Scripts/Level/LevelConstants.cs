@@ -9,6 +9,10 @@ public class LevelConstants : ScriptableObject
     public Color backgroundElementsColor;
     public int levelId;
 
+    [Header("Tutorial")]
+    public bool disableAllSkills;
+    public bool disableUpKick;
+
     [Header("Black Cats")]
     [Range(0,1)] public float blackCatRollIntervalMult = 1;
     [Range(1,10)] public float blackCatRollDurationMult = 1;

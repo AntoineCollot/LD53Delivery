@@ -5,6 +5,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
+using UnityEngine.Windows;
 
 public class PlatformerCharacterSkills : PlayerController
 {
@@ -21,7 +22,7 @@ public class PlatformerCharacterSkills : PlayerController
     public float slideShootRange = 3;
     public Transform slideShootHolder;
     public ParticleSystem slideExplosionFX;
-    public float slideCooldown = 2;
+    public float slideCooldown = 1.5f;
     float lastSlideTime;
     bool canSlide = true;
     bool hasAirbornSlide = false;
@@ -33,7 +34,7 @@ public class PlatformerCharacterSkills : PlayerController
     const float UPKICK_HITBOX_ANGLE = 35;
     const float UPKICK_HITBOX_RADIUS = 0.5f;
     CompositeStateToken isKickingToken;
-    const float UPKICK_BUFFER_AFTER_SLIDE = 0.5f;
+    const float UPKICK_BUFFER_AFTER_SLIDE = 0.6f;
 
     [Header("Dive")]
     public float diveSpeed = 30;
@@ -86,20 +87,22 @@ public class PlatformerCharacterSkills : PlayerController
         ground.onGroundedStateChanged.AddListener(OnGroundedStateChanged);
     }
 
-
     protected override void OnEnable()
     {
         base.OnEnable();
 
         inputs.Gameplay.Skill.performed += OnSkill;
+        inputs.Gameplay.GameOver.performed += OnGameOver;
+        inputs.Gameplay.Dive.performed += OnDive;
     }
-
 
     protected override void OnDisable()
     {
         base.OnDisable();
 
         inputs.Gameplay.Skill.performed -= OnSkill;
+        inputs.Gameplay.GameOver.performed -= OnGameOver;
+        inputs.Gameplay.Dive.performed -= OnDive;
     }
 
     private void FixedUpdate()
@@ -131,9 +134,27 @@ public class PlatformerCharacterSkills : PlayerController
         }
     }
 
+    private void OnGameOver(InputAction.CallbackContext ctx)
+    {
+        GameManager.Instance.GameOver();
+    }
+
+    private void OnDive(InputAction.CallbackContext ctx)
+    {
+        if (!GameManager.Instance.GameIsPlaying || LevelManager.Instance.levelConstants.disableAllSkills)
+            return;
+
+        if (IsDiving || IsKicking || IsSliding)
+        {
+            return;
+        }
+
+        Dive();
+    }
+
     private void OnSkill(InputAction.CallbackContext ctx)
     {
-        if (!GameManager.Instance.GameIsPlaying)
+        if (!GameManager.Instance.GameIsPlaying || LevelManager.Instance.levelConstants.disableAllSkills)
             return;
 
         if (IsDiving || IsKicking)
@@ -143,15 +164,21 @@ public class PlatformerCharacterSkills : PlayerController
         if (IsSliding)
         {
             //Stop slide
-            ForceEndSlide();
-            UpwardKick(movement.facingDirection);
+            if (!LevelManager.Instance.levelConstants.disableUpKick)
+            {
+                ForceEndSlide();
+                UpwardKick(movement.facingDirection);
+            }
             return;
         }
         Vector2 input = inputs.Gameplay.SkillDirection.ReadValue<Vector2>();
 
         if (!IsSliding && Time.time < lastSlideTime + UPKICK_BUFFER_AFTER_SLIDE && input.y >= -0.1f)
         {
-            UpwardKick(movement.facingDirection);
+            if (!LevelManager.Instance.levelConstants.disableUpKick)
+            {
+                UpwardKick(movement.facingDirection);
+            }
             return;
         }
 
@@ -161,23 +188,32 @@ public class PlatformerCharacterSkills : PlayerController
             return;
         }
 
-        switch (input.ToDirection())
-        {
-            case Direction.Up:
-                //UpwardKick(HorizontalDirection.Forward);
-                Dive();
-                break;
-            case Direction.Right:
-            default:
-                Slide(HorizontalDirection.Forward);
-                break;
-            case Direction.Left:
-                Slide(HorizontalDirection.Backward);
-                break;
-            case Direction.Down:
-                Dive();
-                break;
-        }
+        if (input.x >= 0)
+            Slide(HorizontalDirection.Forward);
+        else
+            Slide(HorizontalDirection.Backward);
+
+        //switch (input.ToDirection())
+        //{
+        //    case Direction.Up:
+        //    default:
+        //        if (Mathf.Abs(input.x) < 0.1f)
+        //            Dive();
+        //        else if(input.x>=0)
+        //            Slide(HorizontalDirection.Forward);
+        //        else
+        //            Slide(HorizontalDirection.Backward);
+        //        break;
+        //    case Direction.Right:
+        //        Slide(HorizontalDirection.Forward);
+        //        break;
+        //    case Direction.Left:
+        //        Slide(HorizontalDirection.Backward);
+        //        break;
+        //    case Direction.Down:
+        //        Dive();
+        //        break;
+        //}
     }
 
     public void Slide(HorizontalDirection direction)
@@ -225,6 +261,8 @@ public class PlatformerCharacterSkills : PlayerController
         slideShootHolder.gameObject.SetActive(true);
         slideExplosionFX.Play();
         SFXManager.PlaySound(GlobalSFX.Slide);
+        Physics2D.IgnoreLayerCollision(ENEMY_LAYER, gameObject.layer, true);
+        PlayerDeath.Instance.isInvincible = true;
 
         while (t < 1)
         {
@@ -247,6 +285,8 @@ public class PlatformerCharacterSkills : PlayerController
         slideExplosionFX.Stop();
         slideShootHolder.gameObject.SetActive(false);
         isSlidingToken.SetOn(false);
+        Physics2D.IgnoreLayerCollision(ENEMY_LAYER, gameObject.layer, false);
+        PlayerDeath.Instance.isInvincible = false;
 
         //Clamp speed to max speed
         body.velocity = translateVelocity.normalized * movement.maxSpeed;
@@ -265,6 +305,8 @@ public class PlatformerCharacterSkills : PlayerController
         slideExplosionFX.Stop();
         slideShootHolder.gameObject.SetActive(false);
         isSlidingToken.SetOn(false);
+        Physics2D.IgnoreLayerCollision(ENEMY_LAYER, gameObject.layer, false);
+        PlayerDeath.Instance.isInvincible = false;
 
         //Clamp speed to max speed
         body.velocity = translateVelocity.normalized * movement.maxSpeed;
@@ -306,6 +348,7 @@ public class PlatformerCharacterSkills : PlayerController
 
         SFXManager.PlaySound(GlobalSFX.Kick);
         Physics2D.IgnoreLayerCollision(ENEMY_LAYER, gameObject.layer, true);
+        PlayerDeath.Instance.isInvincible = true;
 
         while (t < 1)
         {
@@ -334,10 +377,18 @@ public class PlatformerCharacterSkills : PlayerController
         }
 
         isKickingToken.SetOn(false);
-        Physics2D.IgnoreLayerCollision(ENEMY_LAYER, gameObject.layer, false);
-
+       
         //Clamp speed to max speed plus a bit
         body.velocity = translateVelocity.normalized * movement.maxSpeed * 1.2f;
+
+        //Give a little bit more invincibility
+        yield return new WaitForSeconds(0.15f);
+
+        if(!IsDiving && !IsSliding && !IsKicking)
+        {
+            Physics2D.IgnoreLayerCollision(ENEMY_LAYER, gameObject.layer, false);
+            PlayerDeath.Instance.isInvincible = false;
+        }
     }
 
     public void Dive()
@@ -358,6 +409,7 @@ public class PlatformerCharacterSkills : PlayerController
     {
         isDivingToken.SetOn(true);
         Physics2D.IgnoreLayerCollision(ENEMY_LAYER, gameObject.layer, true);
+        PlayerDeath.Instance.isInvincible = true;
         translateVelocity = Vector2.down * diveSpeed;
 
         SFXManager.PlaySound(GlobalSFX.Dive);
@@ -385,10 +437,11 @@ public class PlatformerCharacterSkills : PlayerController
             }
         }
 
-        yield return new WaitForSeconds(0.25f);
+        yield return new WaitForSeconds(0.2f);
 
         isDivingToken.SetOn(false);
         Physics2D.IgnoreLayerCollision(ENEMY_LAYER, gameObject.layer, false);
+        PlayerDeath.Instance.isInvincible = false;
     }
 
     void OnEnemyKill()

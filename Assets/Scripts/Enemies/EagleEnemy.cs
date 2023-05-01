@@ -53,6 +53,10 @@ public class EagleEnemy : Enemy
 
         yield return new WaitForSeconds(0.35f);
 
+        angleToPlayer = Vector2.Angle(((PlayerState.Instance.transform.position + Vector3.up * 0.3f) - fireOrigin.position).normalized, facingDirection.ToVector2());
+        if (Mathf.Abs(angleToPlayer) >= maxAngle)
+            yield break;
+
         Vector2 dir = (PlayerState.Instance.transform.position + Vector3.up * 0.3f) - fireOrigin.position;
         dir.Normalize();
 
