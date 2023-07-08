@@ -161,23 +161,39 @@ public class PlatformerCharacterSkills : PlayerController
         {
             return;
         }
+        Vector2 input = inputs.Gameplay.SkillDirection.ReadValue<Vector2>();
         if (IsSliding)
         {
             //Stop slide
             if (!LevelManager.Instance.levelConstants.disableUpKick)
             {
                 ForceEndSlide();
-                UpwardKick(movement.facingDirection);
+                if(Mathf.Abs(input.x)>0.6f)
+                {
+                    if (input.x > 0)
+                        UpwardKick(HorizontalDirection.Forward);
+                    else
+                        UpwardKick(HorizontalDirection.Backward);
+                }
+                else
+                    UpwardKick(movement.facingDirection);
             }
             return;
         }
-        Vector2 input = inputs.Gameplay.SkillDirection.ReadValue<Vector2>();
 
         if (!IsSliding && Time.time < lastSlideTime + UPKICK_BUFFER_AFTER_SLIDE && input.y >= -0.1f)
         {
             if (!LevelManager.Instance.levelConstants.disableUpKick)
             {
-                UpwardKick(movement.facingDirection);
+                if (Mathf.Abs(input.x) > 0.6f)
+                {
+                    if (input.x > 0)
+                        UpwardKick(HorizontalDirection.Forward);
+                    else
+                        UpwardKick(HorizontalDirection.Backward);
+                }
+                else
+                    UpwardKick(movement.facingDirection);
             }
             return;
         }
@@ -188,7 +204,9 @@ public class PlatformerCharacterSkills : PlayerController
             return;
         }
 
-        if (input.x >= 0)
+        if(Mathf.Abs(input.x)<0.1f)
+            Slide(movement.facingDirection);
+        else if (input.x >= 0)
             Slide(HorizontalDirection.Forward);
         else
             Slide(HorizontalDirection.Backward);
@@ -249,7 +267,7 @@ public class PlatformerCharacterSkills : PlayerController
     IEnumerator SlideAnim()
     {
         float t = 0;
-        RaycastHit2D[] hits = new RaycastHit2D[5];
+        RaycastHit2D[] hits;
         ContactFilter2D contactFilter = new ContactFilter2D();
         contactFilter.layerMask = enemiesLayer;
         Vector2 shootDir = new Vector2(Mathf.Cos(slideShootAngle * Mathf.Deg2Rad), Mathf.Sin(slideShootAngle * Mathf.Deg2Rad));
@@ -268,14 +286,16 @@ public class PlatformerCharacterSkills : PlayerController
         {
             t += Time.deltaTime / dashDuration;
 
-            int hitCount = Physics2D.Raycast(slideShootHolder.position, shootDir, contactFilter, hits, slideShootRange);
+           // int hitCount = Physics2D.Raycast(slideShootHolder.position, shootDir, contactFilter, hits, slideShootRange);
+            hits = Physics2D.CircleCastAll(slideShootHolder.position,0.4f, shootDir, slideShootRange,enemiesLayer);
 
-            for (int i = 0; i < hitCount; i++)
+            for (int i = 0; i < hits.Length; i++)
             {
                 if (hits[i].transform.TryGetComponent(out Enemy enemy))
                 {
+                    if (!enemy.isDead)
+                        OnEnemyKill();
                     enemy.Kill(movement.facingDirection);
-                    OnEnemyKill();
                 }
             }
 
@@ -363,8 +383,9 @@ public class PlatformerCharacterSkills : PlayerController
             {
                 if (col.transform.TryGetComponent(out Enemy enemy))
                 {
+                    if (!enemy.isDead)
+                        OnEnemyKill();
                     enemy.Kill(movement.facingDirection, 5);
-                    OnEnemyKill();
                 }
 
                 else if(col.transform.TryGetComponent(out Projectile projectile))
@@ -416,6 +437,27 @@ public class PlatformerCharacterSkills : PlayerController
 
         while (!ground.isGrounded)
         {
+            Collider2D[] airbornCols = Physics2D.OverlapCircleAll(transform.position, 0.6f, enemiesLayer);
+
+            foreach (Collider2D col in airbornCols)
+            {
+                if (col.transform.TryGetComponent(out Enemy enemy))
+                {
+                    HorizontalDirection dir = HorizontalDirection.Forward;
+                    if (enemy.transform.position.x < transform.position.x)
+                        dir = HorizontalDirection.Backward;
+
+                    if (!enemy.isDead)
+                        OnEnemyKill();
+                    enemy.Kill(dir);
+                }
+
+                else if (col.transform.TryGetComponent(out Projectile projectile))
+                {
+                    projectile.Explode();
+                }
+            }
+
             yield return null;
         }
 
@@ -432,8 +474,9 @@ public class PlatformerCharacterSkills : PlayerController
                 if (enemy.transform.position.x < transform.position.x)
                     dir = HorizontalDirection.Backward;
 
+                if(!enemy.isDead)
+                    OnEnemyKill();
                 enemy.Kill(dir);
-                OnEnemyKill();
             }
         }
 

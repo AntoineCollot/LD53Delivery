@@ -457,7 +457,7 @@ MonoBehaviour:
   diveSpeed: 30
   landingFXPrefab: {fileID: 1871483265376200177, guid: e5bc75fd238d5064eb723f635e3b655c,
     type: 3}
-  landingDamageRange: 1
+  landingDamageRange: 1.5
   minDiveTimeAfterJump: 0.17
   onSlide:
     m_PersistentCalls:

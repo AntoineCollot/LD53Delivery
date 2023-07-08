@@ -25946,12 +25946,38 @@ PrefabInstance:
       propertyPath: m_Name
       value: CanvasCleared
       objectReference: {fileID: 0}
+    - target: {fileID: 2925808430770108263, guid: b80f12583fec2d343b64af95e4722383,
+        type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4279308686
+      objectReference: {fileID: 0}
+    - target: {fileID: 2925808431395714769, guid: b80f12583fec2d343b64af95e4722383,
+        type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4279308686
+      objectReference: {fileID: 0}
+    - target: {fileID: 3214925681197841261, guid: b80f12583fec2d343b64af95e4722383,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: LoadMenu
+      objectReference: {fileID: 0}
+    - target: {fileID: 3214925681197841263, guid: b80f12583fec2d343b64af95e4722383,
+        type: 3}
+      propertyPath: m_Name
+      value: FinishButton
+      objectReference: {fileID: 0}
     - target: {fileID: 3214925681197841263, guid: b80f12583fec2d343b64af95e4722383,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 3214925681229491396, guid: b80f12583fec2d343b64af95e4722383,
+        type: 3}
+      propertyPath: m_text
+      value: '- Finish -'
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 8730841423029877265, guid: b80f12583fec2d343b64af95e4722383, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: b80f12583fec2d343b64af95e4722383, type: 3}
 --- !u!1001 &3723643977959261791
 PrefabInstance:

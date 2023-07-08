@@ -18,8 +18,8 @@ public class UIScore : MonoBehaviour
     public GameObject[] afterAnim;
 
     [Header("Settings")]
-    const float TIME_SCROLL_DURATION = 2;
-    const float PAUSE_TIMES = 0.75f;
+    const float TIME_SCROLL_DURATION = 1;
+    const float PAUSE_TIMES = 0.6f;
 
     // Start is called before the first frame update
     void OnEnable()

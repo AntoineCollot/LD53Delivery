@@ -24,4 +24,13 @@ public class SceneLoader : MonoBehaviour
         isLoading = true;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
+
+    public void LoadMenu()
+    {
+        if (isLoading)
+            return;
+
+        isLoading = true;
+        SceneManager.LoadScene(1);
+    }
 }

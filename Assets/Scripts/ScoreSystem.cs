@@ -22,7 +22,7 @@ public class ScoreSystem : MonoBehaviour
                 return "Pretty good ngl";
             else if (BloodLevel < 0.75f)
                 return "Savage";
-            else if (BloodLevel < 0.9f)
+            else if (BloodLevel < 0.92f)
                 return "Serious Damages";
             else return "AHAHAHAH";
         }
